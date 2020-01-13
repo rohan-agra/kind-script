@@ -32,7 +32,7 @@ do
 done
 if [ $ports_in_use -gt 0 ]
     then
-         echo "Kill the running services mentioned above before proceeding to install KIND-VOLTHA"
+         echo -e "\e[31;43m****Kill the running services mentioned above before proceeding to install KIND-VOLTHA****\e[0m"
          echo  -e "\e[31;43m****Terminating Kind-Voltha Installation****\e[0m"
          exit 1
 fi
@@ -47,10 +47,12 @@ if [ "${choice::1}" = "Y" ] || [ "${choice::1}" = "y" ]; then
     if [ "${ver::2}" != "go" ]; then
         wget https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz
         tar -xvf go1.12.9.linux-amd64.tar.gz
+        apt install golang-go
     fi
     mv go /usr/local
     apt install docker
     apt install docker-ce
+    apt install docker.io
     export GOPATH=$(pwd)
     export GOPATH=/usr/local/go
     export PATH=$PATH:$GOPATH/bin
@@ -124,7 +126,6 @@ else
         echo  -e "\e[31;43m****Showing list of the VOLTHA-PODS****\e[0m"
         kubectl get pod -n voltha
     fi
-
         
 fi
 
